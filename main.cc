@@ -41,6 +41,21 @@ int main()
     }
 
     {
+        kobato::Value v(kobato::String("hello"));
+        assert(v.ToString() == "\"hello\"");
+    }
+
+    {
+        kobato::Value v(kobato::Number(123.456));
+        assert(v.ToString() == "123.456");
+    }
+
+    {
+        kobato::Value v(kobato::Boolean(true));
+        assert(v.ToString() == "true");
+    }
+
+    {
         kobato::Value v(kobato::Array{});
         auto& a = v.Get<kobato::Array>();
         a.push_back("foo");

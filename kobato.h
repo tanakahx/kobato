@@ -240,6 +240,8 @@ Value& Value::Set<Null>(const Null& value)
     return *this;
 }
 
+Error Parse(const std::string& s, Value* value_ptr);
+
 static Error ParseHelper(const std::string& s, size_t* start_ptr, Value* value_ptr);
 static void SkipSpace(const std::string& s, size_t* start_ptr);
 static Error ParseString(const std::string& s, size_t* start_ptr, Value* value_ptr);
@@ -258,7 +260,7 @@ void SkipSpace(const std::string& s, size_t* start_ptr)
 Error ParseString(const std::string& s, size_t* start_ptr, Value* value_ptr)
 {
     size_t& start = *start_ptr;
-    if (s[*start_ptr] != '"')
+    if (s[start] != '"')
         return kInvalidToken;
 
     std::unordered_set<char> hex_digit {
@@ -365,7 +367,7 @@ Error ParseOthers(const std::string& s, size_t* start_ptr, Value* value_ptr)
 Error ParseArray(const std::string& s, size_t* start_ptr, Value* value_ptr)
 {
     size_t& start = *start_ptr;
-    if (s[*start_ptr] != '[')
+    if (s[start] != '[')
         return kInvalidToken;
     start++;
     
@@ -400,7 +402,7 @@ Error ParseArray(const std::string& s, size_t* start_ptr, Value* value_ptr)
 Error ParseObject(const std::string& s, size_t* start_ptr, Value* value_ptr)
 {
     size_t& start = *start_ptr;
-    if (s[*start_ptr] != '{')
+    if (s[start] != '{')
         return kInvalidToken;
     start++;
 
